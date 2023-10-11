@@ -31,23 +31,34 @@ const initializeDbAndServer = async () => {
 
 initializeDbAndServer();
 
-const hasPriorityAndStatusProperties = (requestQuery) =>
-  requestQuery.priority !== undefined && requestQuery.status !== undefined;
+const hasPriorityAndStatusProperties = (requestQuery) => {
+  return (
+    requestQuery.priority !== undefined && requestQuery.status !== undefined
+  );
+};
 
-const hasPriorityProperty = (requestQuery) =>
-  requestQuery.priority !== undefined;
-
+const hasPriorityProperty = (requestQuery) => {
+  return requestQuery.priority !== undefined;
+};
 const hasStatusProperty = (requestQuery) => {
   return requestQuery.status !== undefined;
 };
 
-const hasCategoryAndStatus = (requestQuery) =>
-  requestQuery.category !== undefined && requestQuery.status !== undefined;
+const hasCategoryAndStatus = (requestQuery) => {
+  return (
+    requestQuery.category !== undefined && requestQuery.status !== undefined
+  );
+};
 
-const hasCategoryAndPriority = (requestQuery) =>
-  requestQuery.category !== undefined && requestQuery.priority !== undefined;
+const hasCategoryAndPriority = (requestQuery) => {
+  return (
+    requestQuery.category !== undefined && requestQuery.priority !== undefined
+  );
+};
 
-const hasSearchproperty = (requestQuery) => requestQuery.search_q !== undefined;
+const hasSearchproperty = (requestQuery) => {
+  return requestQuery.search_q !== undefined;
+};
 
 const hasCategoryProperty = (requestQuery) =>
   requestQuery.category !== undefined;
@@ -351,7 +362,7 @@ app.put("/todos/:todoId/", async (request, response) => {
   let updateColumn = "";
   const requestBody = request.body;
   console.log(requestBody);
-  const previousTodoQuery = `SELECT * FROM todo WHERE id '${todoId}'; `;
+  const previousTodoQuery = `SELECT * FROM todo WHERE id = ${todoId}; `;
   const previousTodo = await database.get(previousTodoQuery);
 
   const {
