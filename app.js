@@ -65,7 +65,7 @@ const hasCategoryProperty = (requestQuery) =>
 
 const convertDbObjectToResponseObject = (dbObject) => {
   return {
-    Id: dbObject.id,
+    id: dbObject.id,
     todo: dbObject.todo,
     priority: dbObject.priority,
     category: dbObject.category,
@@ -210,9 +210,7 @@ app.get("/todos/", async (request, response) => {
         SELECT
         *
         FROM
-        todo
-        LIKE
-        '%${search_q}%'
+        todo LIKE '%${search_q}%'
         ;`;
       const playersArray = await database.all(getTOdoQuery);
       response.send(
@@ -283,15 +281,16 @@ app.get("/todos/", async (request, response) => {
 
 app.get("/todos/:todoId/", async (request, response) => {
   const { todoId } = request.params;
-  const getPlayerQuery = `
-    SELECT 
-      * 
-    FROM 
+
+  const getTodoQuery = `
+    SELECT
+      *
+    FROM
       todo
-    WHERE 
+    WHERE
       id = ${todoId};`;
-  const player = await database.get(getPlayerQuery);
-  response.send(convertDbObjectToResponseObject(player));
+  const todo = await database.get(getTodoQuery);
+  response.send(todo);
 });
 
 app.get("/agenda/", async (request, response) => {
@@ -314,7 +313,7 @@ app.get("/agenda/", async (request, response) => {
   } else {
     response.status(400);
 
-    response.send("Invalid Due Date");
+    response.send("Invalid Due Date");
   }
 });
 
